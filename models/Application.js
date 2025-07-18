@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
-const ApplicationSchema = new mongoose.Schema({
-  job_id: String,
+const applicationSchema = new mongoose.Schema({
   name: String,
   email: String,
-  resume_link: String,
-  cover_letter: String
+  resume: String,
+  jobId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Job",
+  },
 });
 
-module.exports = mongoose.model("Application", ApplicationSchema);
+module.exports = mongoose.model("Application", applicationSchema);
