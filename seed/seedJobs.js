@@ -1,39 +1,32 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const Job = require("../models/Job");
+const Job = require("./models/Job");
 
 dotenv.config();
-mongoose.connect(process.env.MONGO_URI);
 
-const seedJobs = [
+const jobs = [
   {
     title: "Frontend Developer",
-    company: "Altibbe",
+    company: "Altibbe Inc",
     location: "Remote",
-    description: "React + TS frontend developer needed",
-    type: "Remote"
+    description: "Work on modern UIs using React.",
+    type: "Full-time",
   },
   {
-    title: "Backend Developer",
-    company: "TechFirm",
-    location: "Bangalore",
-    description: "Build REST APIs with Node.js and MongoDB",
-    type: "Full-time"
-  },
-  {
-    title: "Product Designer",
+    title: "Backend Engineer",
     company: "Hedamo",
-    location: "Mumbai",
-    description: "Create clean UI/UX",
-    type: "Part-time"
-  }
+    location: "India",
+    description: "Develop APIs with Node and MongoDB.",
+    type: "Part-time",
+  },
 ];
 
-async function seed() {
-  await Job.deleteMany();
-  await Job.insertMany(seedJobs);
-  console.log("Jobs seeded");
-  mongoose.disconnect();
-}
-
-seed();
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(async () => {
+    await Job.deleteMany();
+    await Job.insertMany(jobs);
+    console.log("Database seeded!");
+    mongoose.disconnect();
+  })
+  .catch((err) => console.error(err));
