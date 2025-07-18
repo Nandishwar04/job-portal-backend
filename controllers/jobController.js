@@ -1,11 +1,22 @@
 const Job = require("../models/Job");
 
-exports.getJobs = async (req, res) => {
-  const jobs = await Job.find();
-  res.json(jobs);
+const getJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find();
+    res.json(jobs);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
 };
 
-exports.getJobById = async (req, res) => {
-  const job = await Job.findById(req.params.id);
-  res.json(job);
+const getJobById = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) return res.status(404).json({ message: "Job not found" });
+    res.json(job);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
 };
+
+module.exports = { getJobs, getJobById };
