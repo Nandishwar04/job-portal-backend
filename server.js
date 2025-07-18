@@ -13,7 +13,9 @@ app.use(express.json());
 // Import routes
 const jobRoutes = require("./routes/jobRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
+const seedRoute = require("./routes/seedRoute");
 
+app.use("/api/seed", seedRoute);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 
